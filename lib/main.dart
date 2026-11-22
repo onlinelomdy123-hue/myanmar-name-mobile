@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:myanmarname/myanmar_name_converter.dart';
@@ -7,6 +6,10 @@ void main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }
+
+const Color primary = Color(0xFF087F5B);
+const Color darkGreen = Color(0xFF075B43);
+const Color backgroundColor = Color(0xFFF5F8F6);
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -18,12 +21,19 @@ class MyApp extends StatelessWidget {
       title: 'Myanmar Name Converter',
       theme: ThemeData(
         primarySwatch: Colors.green,
-        scaffoldBackgroundColor: const Color(0xFFF5F8F6),
+        scaffoldBackgroundColor: backgroundColor,
+        appBarTheme: const AppBarTheme(
+          backgroundColor: darkGreen,
+          foregroundColor: Colors.white,
+          elevation: 0,
+        ),
       ),
       home: const HomePage(),
     );
   }
 }
+
+// ================= HOME PAGE =================
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -40,9 +50,6 @@ class _HomePageState extends State<HomePage> {
 
   String result = '';
 
-  static const Color primary = Color(0xFF087F5B);
-  static const Color darkGreen = Color(0xFF075B43);
-
   @override
   void dispose() {
     controller.dispose();
@@ -58,66 +65,7 @@ class _HomePageState extends State<HomePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              
-Widget header() {
-  return Row(
-    children: [
-      Container(
-        width: 48,
-        height: 48,
-        decoration: BoxDecoration(
-          color: primary,
-          borderRadius: BorderRadius.circular(15),
-        ),
-        child: const Icon(
-          Icons.translate,
-          color: Colors.white,
-          size: 27,
-        ),
-      ),
-      const SizedBox(width: 12),
-      Expanded(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: const [
-            Text(
-              'Myanmar Name',
-              style: TextStyle(
-                fontSize: 19,
-                fontWeight: FontWeight.bold,
-                color: Color(0xFF183D31),
-              ),
-            ),
-            Text(
-              'Name Converter',
-              style: TextStyle(
-                fontSize: 12,
-                color: Colors.black54,
-              ),
-            ),
-          ],
-        ),
-      ),
-      IconButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const AboutPage(),
-            ),
-          );
-        },
-        icon: const Icon(
-          Icons.info_outline_rounded,
-          color: primary,
-          size: 27,
-        ),
-        tooltip: 'About',
-      ),
-    ],
-  );
-}
-,
+              header(),
               const SizedBox(height: 25),
               welcomeCard(),
               const SizedBox(height: 25),
@@ -135,6 +83,8 @@ Widget header() {
     );
   }
 
+  // HEADER
+
   Widget header() {
     return Row(
       children: [
@@ -146,7 +96,7 @@ Widget header() {
             borderRadius: BorderRadius.circular(15),
           ),
           child: const Icon(
-            Icons.translate,
+            Icons.translate_rounded,
             color: Colors.white,
             size: 27,
           ),
@@ -159,7 +109,7 @@ Widget header() {
               Text(
                 'Myanmar Name',
                 style: TextStyle(
-                  fontSize: 20,
+                  fontSize: 19,
                   fontWeight: FontWeight.bold,
                   color: Color(0xFF183D31),
                 ),
@@ -174,37 +124,27 @@ Widget header() {
             ],
           ),
         ),
-        Container(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 12,
-            vertical: 8,
-          ),
-          decoration: BoxDecoration(
-            color: const Color(0xFFE0F2E9),
-            borderRadius: BorderRadius.circular(30),
-          ),
-          child: Row(
-            children: const [
-              Icon(
-                Icons.check_circle,
-                color: primary,
-                size: 15,
+        IconButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const AboutPage(),
               ),
-              SizedBox(width: 5),
-              Text(
-                'Ready',
-                style: TextStyle(
-                  color: primary,
-                  fontWeight: FontWeight.w600,
-                  fontSize: 12,
-                ),
-              ),
-            ],
+            );
+          },
+          icon: const Icon(
+            Icons.info_outline_rounded,
+            color: primary,
+            size: 28,
           ),
+          tooltip: 'About',
         ),
       ],
     );
   }
+
+  // WELCOME CARD
 
   Widget welcomeCard() {
     return Container(
@@ -212,7 +152,7 @@ Widget header() {
       padding: const EdgeInsets.all(22),
       decoration: BoxDecoration(
         gradient: const LinearGradient(
-          colors: [primary, darkGreen],
+          colors: [Color(0xFF16A875), darkGreen],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
@@ -229,7 +169,7 @@ Widget header() {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Icon(
-            Icons.auto_awesome,
+            Icons.auto_awesome_rounded,
             color: Color(0xFFFFE69A),
             size: 30,
           ),
@@ -247,7 +187,7 @@ Widget header() {
             'မြန်မာနာမည်များကို အင်္ဂလိပ်အမည်သို့ '
             'လွယ်ကူစွာ ပြောင်းလဲလိုက်ပါ။',
             style: TextStyle(
-              color: Colors.white.withOpacity(0.85),
+              color: Colors.white.withOpacity(0.9),
               fontSize: 13,
               height: 1.7,
             ),
@@ -256,6 +196,8 @@ Widget header() {
       ),
     );
   }
+
+  // LANGUAGE SELECTOR
 
   Widget languageSelector() {
     return Container(
@@ -287,7 +229,7 @@ Widget header() {
                 borderRadius: BorderRadius.circular(14),
               ),
               child: const Icon(
-                Icons.swap_horiz,
+                Icons.swap_horiz_rounded,
                 color: Colors.white,
                 size: 26,
               ),
@@ -346,6 +288,8 @@ Widget header() {
     );
   }
 
+  // INPUT SECTION
+
   Widget inputSection() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -386,7 +330,7 @@ Widget header() {
                   ),
                   border: InputBorder.none,
                   prefixIcon: const Icon(
-                    Icons.edit,
+                    Icons.edit_rounded,
                     color: primary,
                   ),
                 ),
@@ -439,6 +383,8 @@ Widget header() {
       ],
     );
   }
+
+  // RESULT SECTION
 
   Widget resultSection() {
     return Column(
@@ -496,7 +442,7 @@ Widget header() {
                   child: Column(
                     children: const [
                       Icon(
-                        Icons.text_fields,
+                        Icons.text_fields_rounded,
                         size: 35,
                         color: Color(0xFFCAD9D0),
                       ),
@@ -529,7 +475,7 @@ Widget header() {
                   child: TextButton.icon(
                     onPressed: copyResult,
                     icon: const Icon(
-                      Icons.copy,
+                      Icons.copy_rounded,
                       size: 17,
                     ),
                     label: const Text('Copy Result'),
@@ -546,6 +492,8 @@ Widget header() {
     );
   }
 
+  // INFORMATION
+
   Widget information() {
     return Container(
       width: double.infinity,
@@ -558,7 +506,7 @@ Widget header() {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: const [
           Icon(
-            Icons.info_outline,
+            Icons.info_outline_rounded,
             color: primary,
             size: 21,
           ),
@@ -579,6 +527,8 @@ Widget header() {
       ),
     );
   }
+
+  // CONVERSION FUNCTIONS
 
   void toggleSwitch(bool value) {
     setState(() {
@@ -603,7 +553,8 @@ Widget header() {
       return;
     }
 
-    bool isEnglish = RegExp(r'^[a-zA-Z]').hasMatch(text);
+    bool isEnglish =
+        RegExp(r'^[a-zA-Z]').hasMatch(text.trim());
 
     setState(() {
       myanmarInput = !isEnglish;
@@ -630,24 +581,24 @@ Widget header() {
       ),
     );
   }
+}
+
+// ================= ABOUT PAGE =================
+
 class AboutPage extends StatelessWidget {
   const AboutPage({Key? key}) : super(key: key);
-
-  static const Color primary = Color(0xFF087F5B);
-  static const Color darkGreen = Color(0xFF075B43);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F8F6),
+      backgroundColor: backgroundColor,
       appBar: AppBar(
         title: const Text(
           'About',
-          style: TextStyle(fontWeight: FontWeight.bold),
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+          ),
         ),
-        backgroundColor: darkGreen,
-        foregroundColor: Colors.white,
-        elevation: 0,
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
@@ -655,14 +606,19 @@ class AboutPage extends StatelessWidget {
           children: [
             const SizedBox(height: 15),
 
+            // APP LOGO
+
             Container(
-              width: 105,
-              height: 105,
+              width: 110,
+              height: 110,
               decoration: BoxDecoration(
                 gradient: const LinearGradient(
-                  colors: [Color(0xFF32C58B), darkGreen],
+                  colors: [
+                    Color(0xFF32C58B),
+                    darkGreen,
+                  ],
                 ),
-                borderRadius: BorderRadius.circular(28),
+                borderRadius: BorderRadius.circular(30),
                 boxShadow: [
                   BoxShadow(
                     color: primary.withOpacity(0.2),
@@ -674,7 +630,7 @@ class AboutPage extends StatelessWidget {
               child: const Icon(
                 Icons.translate_rounded,
                 color: Colors.white,
-                size: 55,
+                size: 58,
               ),
             ),
 
@@ -703,6 +659,8 @@ class AboutPage extends StatelessWidget {
 
             const SizedBox(height: 25),
 
+            // DESCRIPTION
+
             Container(
               width: double.infinity,
               padding: const EdgeInsets.all(20),
@@ -718,15 +676,17 @@ class AboutPage extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 15,
                   height: 1.8,
-                  color: Color(0xFF075B43),
+                  color: darkGreen,
                 ),
               ),
             ),
 
             const SizedBox(height: 22),
 
-            infoCard(
-              icon: Icons.info_outline,
+            // ABOUT APP
+
+            aboutCard(
+              icon: Icons.info_outline_rounded,
               title: 'About This App',
               content:
                   'Myanmar Name Converter သည် မြန်မာဘာသာမှ '
@@ -738,13 +698,17 @@ class AboutPage extends StatelessWidget {
 
             const SizedBox(height: 16),
 
-            infoCard(
-              icon: Icons.person_outline,
+            // DEVELOPER
+
+            aboutCard(
+              icon: Icons.person_outline_rounded,
               title: 'Software Developer',
               content: 'Ye Min Tun',
             ),
 
             const SizedBox(height: 16),
+
+            // CONTACT
 
             Container(
               width: double.infinity,
@@ -777,7 +741,8 @@ class AboutPage extends StatelessWidget {
                   const SizedBox(width: 14),
                   const Expanded(
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment:
+                          CrossAxisAlignment.start,
                       children: [
                         Text(
                           'Contact',
@@ -805,6 +770,7 @@ class AboutPage extends StatelessWidget {
                           text: '09974419102',
                         ),
                       );
+
                       ScaffoldMessenger.of(context)
                           .showSnackBar(
                         const SnackBar(
@@ -841,6 +807,8 @@ class AboutPage extends StatelessWidget {
               ),
             ),
 
+            const SizedBox(height: 5),
+
             const Text(
               'Myanmar Name Converter',
               style: TextStyle(
@@ -863,14 +831,16 @@ class AboutPage extends StatelessWidget {
               ),
             ),
 
-            const SizedBox(height: 15),
+            const SizedBox(height: 20),
           ],
         ),
       ),
     );
   }
 
-  static Widget infoCard({
+  // ABOUT INFORMATION CARD
+
+  static Widget aboutCard({
     required IconData icon,
     required String title,
     required String content,
@@ -894,7 +864,11 @@ class AboutPage extends StatelessWidget {
         children: [
           Row(
             children: [
-              Icon(icon, color: primary, size: 25),
+              Icon(
+                icon,
+                color: primary,
+                size: 25,
+              ),
               const SizedBox(width: 10),
               Text(
                 title,
@@ -919,6 +893,4 @@ class AboutPage extends StatelessWidget {
       ),
     );
   }
-}
-
 }
