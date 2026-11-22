@@ -739,7 +739,7 @@ class AboutPage extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(width: 14),
-                  const Expanded(
+                  Expanded(
                     child: Column(
                       crossAxisAlignment:
                           CrossAxisAlignment.start,
