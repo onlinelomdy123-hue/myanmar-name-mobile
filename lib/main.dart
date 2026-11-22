@@ -58,7 +58,66 @@ class _HomePageState extends State<HomePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              header(),
+              
+Widget header() {
+  return Row(
+    children: [
+      Container(
+        width: 48,
+        height: 48,
+        decoration: BoxDecoration(
+          color: primary,
+          borderRadius: BorderRadius.circular(15),
+        ),
+        child: const Icon(
+          Icons.translate,
+          color: Colors.white,
+          size: 27,
+        ),
+      ),
+      const SizedBox(width: 12),
+      Expanded(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: const [
+            Text(
+              'Myanmar Name',
+              style: TextStyle(
+                fontSize: 19,
+                fontWeight: FontWeight.bold,
+                color: Color(0xFF183D31),
+              ),
+            ),
+            Text(
+              'Name Converter',
+              style: TextStyle(
+                fontSize: 12,
+                color: Colors.black54,
+              ),
+            ),
+          ],
+        ),
+      ),
+      IconButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const AboutPage(),
+            ),
+          );
+        },
+        icon: const Icon(
+          Icons.info_outline_rounded,
+          color: primary,
+          size: 27,
+        ),
+        tooltip: 'About',
+      ),
+    ],
+  );
+}
+,
               const SizedBox(height: 25),
               welcomeCard(),
               const SizedBox(height: 25),
@@ -571,4 +630,295 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
+class AboutPage extends StatelessWidget {
+  const AboutPage({Key? key}) : super(key: key);
+
+  static const Color primary = Color(0xFF087F5B);
+  static const Color darkGreen = Color(0xFF075B43);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: const Color(0xFFF5F8F6),
+      appBar: AppBar(
+        title: const Text(
+          'About',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        backgroundColor: darkGreen,
+        foregroundColor: Colors.white,
+        elevation: 0,
+      ),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          children: [
+            const SizedBox(height: 15),
+
+            Container(
+              width: 105,
+              height: 105,
+              decoration: BoxDecoration(
+                gradient: const LinearGradient(
+                  colors: [Color(0xFF32C58B), darkGreen],
+                ),
+                borderRadius: BorderRadius.circular(28),
+                boxShadow: [
+                  BoxShadow(
+                    color: primary.withOpacity(0.2),
+                    blurRadius: 18,
+                    offset: const Offset(0, 8),
+                  ),
+                ],
+              ),
+              child: const Icon(
+                Icons.translate_rounded,
+                color: Colors.white,
+                size: 55,
+              ),
+            ),
+
+            const SizedBox(height: 20),
+
+            const Text(
+              'Myanmar Name Converter',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+                color: Color(0xFF183D31),
+              ),
+            ),
+
+            const SizedBox(height: 8),
+
+            const Text(
+              'Myanmar to English • English to Myanmar',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Colors.black54,
+                fontSize: 13,
+              ),
+            ),
+
+            const SizedBox(height: 25),
+
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                color: const Color(0xFFE3F4EB),
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: const Text(
+                'မြန်မာနာမည်များကို အင်္ဂလိပ်အမည်သို့ '
+                'လွယ်ကူလျင်မြန်စွာ ပြောင်းလဲအသုံးပြုနိုင်သော '
+                'ဆော့ဝဲတစ်ခုဖြစ်ပါသည်။',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 15,
+                  height: 1.8,
+                  color: Color(0xFF075B43),
+                ),
+              ),
+            ),
+
+            const SizedBox(height: 22),
+
+            infoCard(
+              icon: Icons.info_outline,
+              title: 'About This App',
+              content:
+                  'Myanmar Name Converter သည် မြန်မာဘာသာမှ '
+                  'အင်္ဂလိပ်ဘာသာသို့လည်းကောင်း၊ '
+                  'အင်္ဂလိပ်ဘာသာမှ မြန်မာဘာသာသို့လည်းကောင်း '
+                  'အမည်များကို ပြောင်းလဲပေးနိုင်သော '
+                  'အသုံးဝင်သည့် Application ဖြစ်ပါသည်။',
+            ),
+
+            const SizedBox(height: 16),
+
+            infoCard(
+              icon: Icons.person_outline,
+              title: 'Software Developer',
+              content: 'Ye Min Tun',
+            ),
+
+            const SizedBox(height: 16),
+
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(18),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(18),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.04),
+                    blurRadius: 12,
+                    offset: const Offset(0, 4),
+                  ),
+                ],
+              ),
+              child: Row(
+                children: [
+                  Container(
+                    width: 48,
+                    height: 48,
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFE3F4EB),
+                      borderRadius: BorderRadius.circular(14),
+                    ),
+                    child: const Icon(
+                      Icons.phone_rounded,
+                      color: primary,
+                    ),
+                  ),
+                  const SizedBox(width: 14),
+                  const Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Contact',
+                          style: TextStyle(
+                            color: Colors.black54,
+                            fontSize: 13,
+                          ),
+                        ),
+                        SizedBox(height: 5),
+                        Text(
+                          '09974419102',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: darkGreen,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      Clipboard.setData(
+                        const ClipboardData(
+                          text: '09974419102',
+                        ),
+                      );
+                      ScaffoldMessenger.of(context)
+                          .showSnackBar(
+                        const SnackBar(
+                          content: Text(
+                            'Phone number copied!',
+                          ),
+                        ),
+                      );
+                    },
+                    icon: const Icon(
+                      Icons.copy_rounded,
+                      color: primary,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+            const SizedBox(height: 25),
+
+            const Icon(
+              Icons.favorite_rounded,
+              color: primary,
+              size: 30,
+            ),
+
+            const SizedBox(height: 10),
+
+            const Text(
+              'Thank you for using',
+              style: TextStyle(
+                fontSize: 14,
+                color: Colors.black54,
+              ),
+            ),
+
+            const Text(
+              'Myanmar Name Converter',
+              style: TextStyle(
+                fontSize: 17,
+                color: darkGreen,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+
+            const SizedBox(height: 25),
+
+            const Divider(),
+
+            const Text(
+              '© 2026 Ye Min Tun. All rights reserved.',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Colors.black45,
+                fontSize: 12,
+              ),
+            ),
+
+            const SizedBox(height: 15),
+          ],
+        ),
+      ),
+    );
+  }
+
+  static Widget infoCard({
+    required IconData icon,
+    required String title,
+    required String content,
+  }) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(18),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(18),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.04),
+            blurRadius: 12,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(icon, color: primary, size: 25),
+              const SizedBox(width: 10),
+              Text(
+                title,
+                style: const TextStyle(
+                  fontSize: 17,
+                  fontWeight: FontWeight.bold,
+                  color: darkGreen,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 12),
+          Text(
+            content,
+            style: const TextStyle(
+              fontSize: 14,
+              height: 1.7,
+              color: Colors.black87,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 }
