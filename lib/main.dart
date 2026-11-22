@@ -9,7 +9,7 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,12 +17,8 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Myanmar Name Converter',
       theme: ThemeData(
-        useMaterial3: true,
+        primarySwatch: Colors.green,
         scaffoldBackgroundColor: const Color(0xFFF5F8F6),
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFF087F5B),
-        ),
-        fontFamily: null,
       ),
       home: const HomePage(),
     );
@@ -30,16 +26,17 @@ class MyApp extends StatelessWidget {
 }
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  const HomePage({Key? key}) : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  bool _myanmarInput = true;
+  bool myanmarInput = true;
 
-  final TextEditingController tec = TextEditingController();
+  final TextEditingController controller =
+      TextEditingController();
 
   String result = '';
 
@@ -48,7 +45,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void dispose() {
-    tec.dispose();
+    controller.dispose();
     super.dispose();
   }
 
@@ -57,21 +54,21 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.fromLTRB(20, 18, 20, 30),
+          padding: const EdgeInsets.all(20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _header(),
-              const SizedBox(height: 30),
-              _welcomeCard(),
+              header(),
               const SizedBox(height: 25),
-              _languageSelector(),
-              const SizedBox(height: 22),
-              _inputSection(),
-              const SizedBox(height: 22),
-              _resultSection(),
+              welcomeCard(),
               const SizedBox(height: 25),
-              _information(),
+              languageSelector(),
+              const SizedBox(height: 25),
+              inputSection(),
+              const SizedBox(height: 25),
+              resultSection(),
+              const SizedBox(height: 25),
+              information(),
             ],
           ),
         ),
@@ -79,7 +76,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _header() {
+  Widget header() {
     return Row(
       children: [
         Container(
@@ -90,16 +87,16 @@ class _HomePageState extends State<HomePage> {
             borderRadius: BorderRadius.circular(15),
           ),
           child: const Icon(
-            Icons.translate_rounded,
+            Icons.translate,
             color: Colors.white,
             size: 27,
           ),
         ),
         const SizedBox(width: 12),
-        const Expanded(
+        Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+            children: const [
               Text(
                 'Myanmar Name',
                 style: TextStyle(
@@ -127,9 +124,13 @@ class _HomePageState extends State<HomePage> {
             color: const Color(0xFFE0F2E9),
             borderRadius: BorderRadius.circular(30),
           ),
-          child: const Row(
-            children: [
-              Icon(Icons.check_circle, color: primary, size: 15),
+          child: Row(
+            children: const [
+              Icon(
+                Icons.check_circle,
+                color: primary,
+                size: 15,
+              ),
               SizedBox(width: 5),
               Text(
                 'Ready',
@@ -146,7 +147,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _welcomeCard() {
+  Widget welcomeCard() {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(22),
@@ -169,7 +170,7 @@ class _HomePageState extends State<HomePage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Icon(
-            Icons.auto_awesome_rounded,
+            Icons.auto_awesome,
             color: Color(0xFFFFE69A),
             size: 30,
           ),
@@ -184,7 +185,8 @@ class _HomePageState extends State<HomePage> {
           ),
           const SizedBox(height: 8),
           Text(
-            'မြန်မာနာမည်များကို အင်္ဂလိပ်အမည်သို့ လွယ်ကူစွာ ပြောင်းလဲလိုက်ပါ။',
+            'မြန်မာနာမည်များကို အင်္ဂလိပ်အမည်သို့ '
+            'လွယ်ကူစွာ ပြောင်းလဲလိုက်ပါ။',
             style: TextStyle(
               color: Colors.white.withOpacity(0.85),
               fontSize: 13,
@@ -196,26 +198,28 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _languageSelector() {
+  Widget languageSelector() {
     return Container(
       padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(18),
-        border: Border.all(color: const Color(0xFFE4ECE7)),
+        border: Border.all(
+          color: const Color(0xFFE4ECE7),
+        ),
       ),
       child: Row(
         children: [
           Expanded(
-            child: _languageButton(
-              title: 'မြန်မာ',
-              subtitle: 'Myanmar',
-              selected: _myanmarInput,
-              onTap: () => _toggleSwitch(true),
+            child: languageButton(
+              'မြန်မာ',
+              'Myanmar',
+              myanmarInput,
+              () => toggleSwitch(true),
             ),
           ),
           GestureDetector(
-            onTap: () => _toggleSwitch(!_myanmarInput),
+            onTap: () => toggleSwitch(!myanmarInput),
             child: Container(
               width: 43,
               height: 43,
@@ -224,18 +228,18 @@ class _HomePageState extends State<HomePage> {
                 borderRadius: BorderRadius.circular(14),
               ),
               child: const Icon(
-                Icons.swap_horiz_rounded,
+                Icons.swap_horiz,
                 color: Colors.white,
                 size: 26,
               ),
             ),
           ),
           Expanded(
-            child: _languageButton(
-              title: 'English',
-              subtitle: 'English',
-              selected: !_myanmarInput,
-              onTap: () => _toggleSwitch(false),
+            child: languageButton(
+              'English',
+              'English',
+              !myanmarInput,
+              () => toggleSwitch(false),
             ),
           ),
         ],
@@ -243,12 +247,12 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _languageButton({
-    required String title,
-    required String subtitle,
-    required bool selected,
-    required VoidCallback onTap,
-  }) {
+  Widget languageButton(
+    String title,
+    String subtitle,
+    bool selected,
+    VoidCallback onTap,
+  ) {
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -283,7 +287,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _inputSection() {
+  Widget inputSection() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -301,17 +305,20 @@ class _HomePageState extends State<HomePage> {
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(19),
-            border: Border.all(color: const Color(0xFFE4ECE7)),
+            border: Border.all(
+              color: const Color(0xFFE4ECE7),
+            ),
           ),
           child: Column(
             children: [
               TextField(
-                controller: tec,
+                controller: controller,
                 maxLines: 3,
                 minLines: 2,
-                textCapitalization: TextCapitalization.words,
+                textCapitalization:
+                    TextCapitalization.words,
                 decoration: InputDecoration(
-                  hintText: _myanmarInput
+                  hintText: myanmarInput
                       ? 'မြန်မာနာမည် ရိုက်ထည့်ပါ...'
                       : 'Enter English Name...',
                   hintStyle: const TextStyle(
@@ -319,19 +326,12 @@ class _HomePageState extends State<HomePage> {
                     fontSize: 14,
                   ),
                   border: InputBorder.none,
-                  prefixIcon: const Padding(
-                    padding: EdgeInsets.only(right: 10),
-                    child: Icon(
-                      Icons.edit_rounded,
-                      color: primary,
-                    ),
-                  ),
-                  prefixIconConstraints: const BoxConstraints(
-                    minWidth: 30,
-                    minHeight: 30,
+                  prefixIcon: const Icon(
+                    Icons.edit,
+                    color: primary,
                   ),
                 ),
-                onChanged: _convert,
+                onChanged: convert,
               ),
               const Divider(height: 20),
               Row(
@@ -351,11 +351,11 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                   ),
-                  if (tec.text.isNotEmpty)
+                  if (controller.text.isNotEmpty)
                     GestureDetector(
-                      onTap: _clear,
-                      child: const Row(
-                        children: [
+                      onTap: clearText,
+                      child: Row(
+                        children: const [
                           Icon(
                             Icons.delete_outline,
                             size: 17,
@@ -381,12 +381,12 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _resultSection() {
+  Widget resultSection() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Row(
-          children: [
+        Row(
+          children: const [
             Icon(
               Icons.auto_awesome,
               color: primary,
@@ -406,7 +406,9 @@ class _HomePageState extends State<HomePage> {
         const SizedBox(height: 12),
         Container(
           width: double.infinity,
-          constraints: const BoxConstraints(minHeight: 145),
+          constraints: const BoxConstraints(
+            minHeight: 145,
+          ),
           padding: const EdgeInsets.all(20),
           decoration: BoxDecoration(
             color: Colors.white,
@@ -414,19 +416,14 @@ class _HomePageState extends State<HomePage> {
             border: Border.all(
               color: const Color(0xFFDCEBE1),
             ),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.025),
-                blurRadius: 12,
-                offset: const Offset(0, 4),
-              ),
-            ],
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                _myanmarInput ? 'ENGLISH NAME' : 'MYANMAR NAME',
+                myanmarInput
+                    ? 'ENGLISH NAME'
+                    : 'MYANMAR NAME',
                 style: const TextStyle(
                   color: primary,
                   fontSize: 11,
@@ -436,11 +433,11 @@ class _HomePageState extends State<HomePage> {
               ),
               const SizedBox(height: 18),
               if (result.isEmpty)
-                const Center(
+                Center(
                   child: Column(
-                    children: [
+                    children: const [
                       Icon(
-                        Icons.text_fields_rounded,
+                        Icons.text_fields,
                         size: 35,
                         color: Color(0xFFCAD9D0),
                       ),
@@ -471,14 +468,14 @@ class _HomePageState extends State<HomePage> {
                 Align(
                   alignment: Alignment.centerRight,
                   child: TextButton.icon(
-                    onPressed: _copyResult,
+                    onPressed: copyResult,
                     icon: const Icon(
-                      Icons.copy_rounded,
+                      Icons.copy,
                       size: 17,
                     ),
                     label: const Text('Copy Result'),
                     style: TextButton.styleFrom(
-                      foregroundColor: primary,
+                      primary: primary,
                     ),
                   ),
                 ),
@@ -490,7 +487,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _information() {
+  Widget information() {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(16),
@@ -498,11 +495,11 @@ class _HomePageState extends State<HomePage> {
         color: const Color(0xFFE9F4ED),
         borderRadius: BorderRadius.circular(17),
       ),
-      child: const Row(
+      child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+        children: const [
           Icon(
-            Icons.info_outline_rounded,
+            Icons.info_outline,
             color: primary,
             size: 21,
           ),
@@ -524,49 +521,46 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  void _toggleSwitch(bool status) {
+  void toggleSwitch(bool value) {
     setState(() {
-      _myanmarInput = status;
-      result = '';
-      tec.clear();
-    });
-  }
-
-  void _clear() {
-    setState(() {
-      tec.clear();
+      myanmarInput = value;
+      controller.clear();
       result = '';
     });
   }
 
-  void _convert(String text) {
-    if (text.isEmpty) {
+  void clearText() {
+    setState(() {
+      controller.clear();
+      result = '';
+    });
+  }
+
+  void convert(String text) {
+    if (text.trim().isEmpty) {
       setState(() {
         result = '';
       });
       return;
     }
 
-    bool isEnglish = checkEnglish(text);
+    bool isEnglish = RegExp(r'^[a-zA-Z]').hasMatch(text);
 
     setState(() {
-      _myanmarInput = !isEnglish;
+      myanmarInput = !isEnglish;
 
-      result = _myanmarInput
+      result = myanmarInput
           ? MyanmarNameConverter.mm2en(text)
           : MyanmarNameConverter.en2mm(text);
     });
   }
 
-  bool checkEnglish(String input) {
-    RegExp regex = RegExp(r'^[a-zA-Z]');
-    return regex.hasMatch(input);
-  }
-
-  void _copyResult() {
+  void copyResult() {
     if (result.isEmpty) return;
 
-    Clipboard.setData(ClipboardData(text: result));
+    Clipboard.setData(
+      ClipboardData(text: result),
+    );
 
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
@@ -576,188 +570,5 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: primary,
       ),
     );
-  }
-}
-import 'package:flutter/material.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
-import 'package:myanmarname/myanmar_name_converter.dart';
-
-void main() {
-
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      // showSemanticsDebugger: false,
-      title: 'Myanmar Name',
-      theme: ThemeData(
-        primarySwatch: Colors.green,
-      ),
-      home: const HomePage(),
-    );
-  }
-}
-
-class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
-
-  @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  bool _myanmarInput = true;
-  TextEditingController tec = TextEditingController();
-  String result = "";
-
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar:  AppBar(
-        title: Text("Myanmar Name"),
-      ),
-      body: _mainWidget(),
-    );
-  }
-
-  Widget _mainWidget(){
-    return Column(
-      children: [
-        // indicator
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-
-            Expanded(
-                child: Text(_myanmarInput ? "Myanmar" : "English", textAlign: TextAlign.end,)
-            ),
-
-            Container(
-                margin: EdgeInsets.all(8.0),
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.green),
-                  borderRadius: BorderRadius.circular(8.0)
-                ),
-                child: TextButton(onPressed: (){ _toggleSwitch(!_myanmarInput); }, child: Icon(Icons.arrow_forward_ios, color: Colors.green,))),
-
-
-            Expanded(child: Text(_myanmarInput ? "English" : "Myanmar")),
-            /*
-            Switch(
-              value: _myanmarInput,
-              inactiveTrackColor: Colors.greenAccent,
-              inactiveThumbColor: Colors.green,
-              onChanged: (value) {
-                _toggleSwitch(value);
-              },
-            ),
-            */
-            // Text('English'),
-          ],
-        ),
-        // result
-        result.isEmpty ? Container(
-            padding: EdgeInsets.all(8.0),
-            margin: EdgeInsets.all(8.0),
-            child: Text("Enter English Name / မြန်မာ နာမည် ရိုက်ထည့်ပါ", style: TextStyle(color: Colors.black26),)) :
-        Container(
-          padding: EdgeInsets.all(8.0),
-            margin: EdgeInsets.all(8.0),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8.0),
-              color: Colors.white,
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black12,
-                  spreadRadius: 1,
-                  blurRadius: 1,
-                  offset: Offset(0, 0), // changes position of shadow
-                ),
-              ],
-            ),
-            child: Text(result, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),)
-        ),
-        // _switchValue ? Text("Enter Myanmar") : Text("Enter English"),
-        SizedBox(height: 8.0,),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: TextFormField(
-            controller: tec,
-            // textAlign: TextAlign.center,
-            decoration: InputDecoration(
-              border: OutlineInputBorder(),
-              hintText: _myanmarInput ? "Enter Myanmar" : "Enter English",
-              label:  _myanmarInput ? Text("Enter Myanmar") : Text("Enter English"),
-            ),
-            onChanged: (String? text){
-              _convert(text: text ?? "");
-            },
-
-          ),
-        )
-      ],
-    );
-  }
-
-  void _toggleSwitch(bool status){
-    setState(() {
-      // clear
-      result = "";
-      tec.clear();
-      _myanmarInput = status;
-    });
-  }
-
-  void _convert({required String text}){
-    // check mode and text is match
-
-    print(checkEnglish(text));
-    print("_myanmar is $_myanmarInput");
-
-    if(text.isNotEmpty){
-      if(checkEnglish(text[0])){
-        // user type english
-        if(_myanmarInput == true ){
-          // we're expection myanmar
-          // so change
-          setState(() {
-            _myanmarInput = false;
-          });
-        }
-      }
-      else{
-        if(_myanmarInput == false){
-          // မြန်မာစာ လက်မခံဘူးဆိုပေမယ့် မြန်မာစာတွေ ရိုက်နေတယ်။
-          setState(() {
-            _myanmarInput = true;
-          });
-        }
-      }
-    }
-
-    print("_myanmar is $_myanmarInput");
-
-
-    setState(() {
-      result = _myanmarInput ?   MyanmarNameConverter.mm2en(text) : MyanmarNameConverter.en2mm(text);
-    });
-  }
-
-  bool checkEnglish(String input) {
-    RegExp regex = RegExp(r'^[a-zA-Z]');
-    return regex.hasMatch(input);
   }
 }
