@@ -1,8 +1,14 @@
+
 buildscript {
     ext.kotlin_version = '1.7.10'
+
     repositories {
         google()
+        maven {
+            url 'https://maven-central.storage-download.googleapis.com/maven2/'
+        }
         mavenCentral()
+        gradlePluginPortal()
     }
 
     dependencies {
@@ -14,14 +20,19 @@ buildscript {
 allprojects {
     repositories {
         google()
+        maven {
+            url 'https://maven-central.storage-download.googleapis.com/maven2/'
+        }
         mavenCentral()
     }
 }
 
 rootProject.buildDir = '../build'
+
 subprojects {
     project.buildDir = "${rootProject.buildDir}/${project.name}"
 }
+
 subprojects {
     project.evaluationDependsOn(':app')
 }
