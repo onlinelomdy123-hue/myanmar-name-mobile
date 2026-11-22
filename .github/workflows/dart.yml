@@ -1,3 +1,4 @@
+
 name: Build Myanmar Name APK
 
 on:
@@ -15,12 +16,12 @@ jobs:
         uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: '17'
+          java-version: '11'
 
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          channel: stable
+          flutter-version: '3.7.12'
           cache: true
 
       - name: Install dependencies
